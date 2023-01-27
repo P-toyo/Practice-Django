@@ -1,3 +1,8 @@
+
+{% extends 'todo/base.html' %}
+
+{% block content %}
+
 <form action="" method="POST">
     {% csrf_token %}
     <table>
@@ -5,3 +10,5 @@
     </table>
     <input type="submit" value="送信">
 </form>
+
+{% endblock content %}

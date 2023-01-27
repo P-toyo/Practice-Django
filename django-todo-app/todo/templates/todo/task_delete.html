@@ -1,6 +1,12 @@
+{% extends 'todo/base.html' %}
+
+{% block content %}
+
 <form action="" method="POST">
     {% csrf_token %}
     <h2>{{ task.pk }}.{{ task.title }}</h2>
     <p>このタスクを削除しても良いですか？</p>
     <input type="submit" value="削除">
 </form>
+
+{% endblock content %}
