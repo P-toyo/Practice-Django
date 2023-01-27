@@ -2,29 +2,40 @@
 
 {% block header %}
 <div class="p-3 mb-5"></div>
-
+    <h1>TodoApp</h1>
+    <p>タスクを作成しましょう！</p>
 
 {% endblock header %}
 
 {% block content %}
 
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">タイトル</th>
-      <th scope="col">締切</th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for task in object_list %}
-      <tr>
-        <td>{{ task.title }}</td>
-        <td>{{ task.deadline }}</td>
-        <td></td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<div class="shadow-sm p-3 mb-5 bg-body rounded">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end me-3">
+        <a href="{% url "task-new" %}" class="btn btn-outline-success">新規作成</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">タイトル</th>
+            <th scope="col">締切</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in object_list %}
+            <tr>
+                <td>
+                    <a href="{% url "task-detail" task.pk %}">{{ task.title }}</a>
+                </td>
+                <td>{{ task.deadline }}</td>
+                <td>
+                    <a href="{% url "task-edit" task.pk %}">編集</a>
+                    <a href="{% url "task-delete" task.pk %}">削除</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 {% endblock content %}
