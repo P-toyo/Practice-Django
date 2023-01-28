@@ -2,8 +2,14 @@
 
 {% block content %}
 
-<h2>{{ task.title }}</h2>
-<p>{{ task.discription }}</p>
-<p>{{ task.deadline }}</p>
+<div class="card mt-5">
+    <div class="card-body">
+        <h2>{{ task.title }}</h2>
+        <p>{{ task.discription }}</p>
+        <p class="text-muted">{{ task.deadline }}</p>
+        <a class="btn btn-outline-success" href="{% url "task-edit" task.pk %}">編集</a>
+        <a class="btn btn-outline-danger" href="{% url "task-delete" task.pk %}">削除</a>
+    </div>
+</div>
 
 {% endblock content %}
