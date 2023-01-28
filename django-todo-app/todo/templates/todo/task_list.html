@@ -1,4 +1,4 @@
-{% extends 'todo/base.html' %}
+{% extends 'base.html' %}
 
 {% block header %}
 <div class="p-3 mb-5"></div>
@@ -10,9 +10,11 @@
 {% block content %}
 
 <div class="shadow-sm p-3 mb-5 bg-body rounded">
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end me-3">
-        <a href="{% url "task-new" %}" class="btn btn-outline-success">新規作成</a>
-    </div>
+    {% if user.is_authenticated %}
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end me-3">
+            <a href="{% url "task-new" %}" class="btn btn-outline-success">新規作成</a>
+        </div>
+    {% endif %}
     <table class="table">
         <thead>
             <tr>
@@ -28,10 +30,12 @@
                     <a href="{% url "task-detail" task.pk %}">{{ task.title }}</a>
                 </td>
                 <td>{{ task.deadline }}</td>
-                <td>
-                    <a href="{% url "task-edit" task.pk %}">編集</a>
-                    <a href="{% url "task-delete" task.pk %}">削除</a>
-                </td>
+                {% if user.is_authenticated %}
+                    <td>
+                        <a href="{% url "task-edit" task.pk %}">編集</a>
+                        <a href="{% url "task-delete" task.pk %}">削除</a>
+                    </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>
