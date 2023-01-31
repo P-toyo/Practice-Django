@@ -1,0 +1,7 @@
+{% for blog in object_list %}
+    {% if blog.is_published %}
+        <h3>{{ blog.title }}</h3>
+        <p>{{ blog.content | truncatechars:30 }}</p>
+        <p>{{ post.created_at }}{{ post.updated_at }}</p>
+    {% endif %}
+{% endfor %}
