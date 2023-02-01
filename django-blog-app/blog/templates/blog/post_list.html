@@ -1,7 +1,15 @@
-{% for blog in object_list %}
-    {% if blog.is_published %}
-        <h3>{{ blog.title }}</h3>
-        <p>{{ blog.content | truncatechars:30 }}</p>
-        <p>{{ post.created_at }}{{ post.updated_at }}</p>
-    {% endif %}
-{% endfor %}
+{% extends "blog/base.html" %}
+
+{% block content %}
+    {% for blog in object_list %}
+        {% if blog.is_published or user.is_superuser %}
+            {% if not blog.is_published %}
+                <span class="badge bg-danger">下書き</span>
+            {% endif %}
+            <h3>{{ blog.title }}</h3>
+            <p>{{ blog.content | truncatechars:30 }}</p>
+            <p>{{ blog.created_at }}{{ blog.updated_at }}</p>
+            <p><a href="{% url "post-detail" blog.pk %}">続きを読む＞＞</a></p>
+        {% endif %}
+    {% endfor %}
+{% endblock content %}
