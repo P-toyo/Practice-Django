@@ -9,6 +9,10 @@ class BlogListView(ListView):
     model = Task
     template_name = "blog/post_list.html"
 
+    def get_queryset(self):
+        posts = super().get_queryset()
+        return posts.order_by("-updated_at")
+
 class BlogDetailView(DetailView):
     model = Task
     template_name = "blog/post_detail.html"
