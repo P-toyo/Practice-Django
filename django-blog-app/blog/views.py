@@ -1,9 +1,9 @@
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 
 # Create your views here.
-from blog.models import Task
+from blog.models import Task, Category
 
 class BlogListView(ListView):
     model = Task
@@ -23,3 +23,12 @@ class BlogDetailView(DetailView):
             return post
         else:
             raise Http404
+
+class CategoryPostListView(ListView):
+    model = Task
+    tamplate_name = "blog/post_list.html"
+
+    def get_queryset(self):
+        slug = self.kwargs["slug"]
+        self.category = get_object_or_404(Category, slug=slug)
+        return super().get_queryset().filter(category=self.category)
