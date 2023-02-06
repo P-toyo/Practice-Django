@@ -29,9 +29,6 @@ class CategoryBlogListView(ListView):
     tamplate_name = "blog/post_list.html"
 
     def get_queryset(self):
-
-        print(self)
-        print(self.kwargs)
         slug = self.kwargs["slug"]
         self.category = get_object_or_404(Category, slug=slug)
         return super().get_queryset().filter(category=self.category)
