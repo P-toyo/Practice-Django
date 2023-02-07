@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 
 # Create your views here.
-from blog.models import Task, Category
+from blog.models import Task, Category, Tag
 
 class BlogListView(ListView):
     model = Task
@@ -32,3 +32,12 @@ class CategoryBlogListView(ListView):
         slug = self.kwargs["slug"]
         self.category = get_object_or_404(Category, slug=slug)
         return super().get_queryset().filter(category=self.category)
+
+class TagBlogListView(ListView):
+    model = Task
+    template_name = "blog/post_list.html"
+
+    def get_queryset(self):
+        slug = self.kwargs["slug"]
+        self.tag = get_object_or_404(Tag, slug=slug)
+        return super().get_queryset().filter(tag=self.tag)
