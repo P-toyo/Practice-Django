@@ -8,6 +8,7 @@ from blog.models import Task, Category, Tag
 class BlogListView(ListView):
     model = Task
     template_name = "blog/post_list.html"
+    context_object_name = "posts"
 
     def get_queryset(self):
         posts = super().get_queryset()
@@ -26,18 +27,30 @@ class BlogDetailView(DetailView):
 
 class CategoryBlogListView(ListView):
     model = Task
-    tamplate_name = "blog/post_list.html"
+    template_name = "blog/post_list.html"
+    context_object_name = "posts"
 
     def get_queryset(self):
         slug = self.kwargs["slug"]
         self.category = get_object_or_404(Category, slug=slug)
         return super().get_queryset().filter(category=self.category)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["category"] = self.category
+        return context
+
 class TagBlogListView(ListView):
     model = Task
     template_name = "blog/post_list.html"
+    context_object_name = "posts"
 
     def get_queryset(self):
         slug = self.kwargs["slug"]
         self.tag = get_object_or_404(Tag, slug=slug)
         return super().get_queryset().filter(tag=self.tag)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["tag"] = self.tag
+        return context
