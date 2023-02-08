@@ -1,0 +1,20 @@
+<div class="p-4 category">
+    <h4>カテゴリー</h4>
+    <ul class="list-group list-group-flush">
+        {% for category in categories %}
+            <li class="list-group-item">
+                <a href="{% url "category-post-list" category.slug %}">
+                    {{ category.name }}({{ category.count }})
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="p-4">
+    <h4>タグ</h4>
+    {% for tag in tags %}
+        <a class="btn btn-light bg-light text-dark m-1" href="{% url "tag-post-list" tag.slug %}">
+            {{ tag.name }}
+        </a>                 
+    {% endfor %}
+</div>
