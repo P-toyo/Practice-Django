@@ -10,7 +10,7 @@
                 <h1>#{{ tag }}</h1>
                 <hr>
             {% elif query %}
-                <h1>"{{ query }}"の検索結果 {{ posts.count }}件</h1>
+                <h1>"{{ query }}"の検索結果 {{ post_count }}件</h1>
                 <hr>
             {% endif %}
             {% for blog in posts %}
