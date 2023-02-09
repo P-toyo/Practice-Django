@@ -9,6 +9,9 @@
             {% elif tag %}
                 <h1>#{{ tag }}</h1>
                 <hr>
+            {% elif query %}
+                <h1>"{{ query }}"の検索結果 {{ posts.count }}件</h1>
+                <hr>
             {% endif %}
             {% for blog in posts %}
                 {% if blog.is_published or user.is_superuser %}
@@ -21,6 +24,9 @@
                     <p><a href="{% url "post-detail" blog.pk %}">続きを読む＞＞</a></p>
                 {% endif %}
             {% endfor %}
+
+            {% include "blog/snippets/pagination.html" %}
+
         </div>
         <div class="col-3">
             {% include "blog/snippets/sidebar.html" %}

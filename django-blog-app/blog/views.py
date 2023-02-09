@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
@@ -9,6 +10,7 @@ class BlogListView(ListView):
     model = Task
     template_name = "blog/post_list.html"
     context_object_name = "posts"
+    paginate_by = 1
 
     def get_queryset(self):
         posts = super().get_queryset()
@@ -29,6 +31,7 @@ class CategoryBlogListView(ListView):
     model = Task
     template_name = "blog/post_list.html"
     context_object_name = "posts"
+    paginate_by = 1
 
     def get_queryset(self):
         slug = self.kwargs["slug"]
@@ -44,6 +47,7 @@ class TagBlogListView(ListView):
     model = Task
     template_name = "blog/post_list.html"
     context_object_name = "posts"
+    paginate_by = 1
 
     def get_queryset(self):
         slug = self.kwargs["slug"]
@@ -53,4 +57,28 @@ class TagBlogListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["tag"] = self.tag
+        return context
+
+class SearchBlogListView(ListView):
+    model = Task
+    template_name = "blog/post_list.html"
+    context_object_name = "posts"
+
+    def get_queryset(self):
+        self.query = self.request.GET.get("query") or ""
+        queryset = super().get_queryset()
+
+        if self.query:
+            queryset = queryset.filter(
+                Q(title__icontains = self.query) | Q(content__icontains = self.query)
+            )
+
+        if not self.request.user.is_authenticated:
+            queryset = queryset.filter(is_published = True)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["query"] = self.query
         return context
