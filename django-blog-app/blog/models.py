@@ -7,6 +7,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = "カテゴリー"
+        verbose_name_plural = "カテゴリー"
+
 class Tag(models.Model):
     name = models.CharField(verbose_name="タグ", max_length=255)
     slug = models.SlugField(verbose_name="URL", unique=True)
@@ -14,7 +18,10 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
-# Create your models here.
+    class Meta:
+        verbose_name = "タグ"
+        verbose_name_plural = "タグ"
+
 class Task(models.Model):
     title = models.CharField(verbose_name="タイトル", max_length=200)
     content = models.TextField(verbose_name="本文")
@@ -28,3 +35,7 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name = "記事"
+        verbose_name_plural = "記事"
