@@ -18,6 +18,9 @@
                     {% if not blog.is_published %}
                         <span class="badge bg-danger">下書き</span>
                     {% endif %}
+                    {% if blog.image %}
+                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}" width="300" height="200">
+                    {% endif %}
                     <h3>{{ blog.title }}</h3>
                     <p>{{ blog.content | truncatechars:30 }}</p>
                     <p>{{ blog.created_at }}{{ blog.updated_at }}</p>

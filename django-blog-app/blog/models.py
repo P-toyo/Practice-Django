@@ -18,6 +18,7 @@ class Tag(models.Model):
 class Task(models.Model):
     title = models.CharField(verbose_name="タイトル", max_length=200)
     content = models.TextField(verbose_name="本文")
+    image = models.ImageField(verbose_name="画像", upload_to="uploads/", null=True, blank=True)
     created_at = models.DateTimeField(verbose_name="作成日", auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name="更新日", auto_now=True)
     is_published = models.BooleanField(verbose_name="公開設定", default=False)
