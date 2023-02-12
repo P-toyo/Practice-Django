@@ -1,5 +1,5 @@
 from django.contrib import admin
-from blog.models import Task, Category, Tag
+from blog.models import Task, Category, Tag, Comment
 
 class PostAdmin(admin.ModelAdmin):
     list_display = ("title", "category", "created_at", "updated_at", "is_published")
@@ -9,3 +9,4 @@ class PostAdmin(admin.ModelAdmin):
 admin.site.register(Task, PostAdmin)
 admin.site.register(Category)
 admin.site.register(Tag)
+admin.site.register(Comment)
