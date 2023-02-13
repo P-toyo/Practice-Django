@@ -53,3 +53,17 @@ class Comment(models.Model):
     class Meta:
         verbose_name = "コメント"
         verbose_name_plural = "コメント"
+
+class Reply(models.Model):
+    name = models.CharField(verbose_name="名前", max_length=100)
+    text = models.TextField(verbose_name="本文")
+    created_at = models.DateTimeField(verbose_name="作成日", auto_now_add=True)
+
+    comment = models.ForeignKey(Comment, verbose_name="コメント", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.text[:10]
+
+    class Meta:
+        verbose_name = "返信"
+        verbose_name_plural = "返信"
