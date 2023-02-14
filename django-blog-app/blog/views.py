@@ -1,10 +1,11 @@
 from django.db.models import Q
 from django.http import Http404
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import ListView, DetailView, CreateView
 
 # Create your views here.
-from blog.models import Task, Category, Tag
+from blog.models import Task, Category, Tag, Comment, Reply
+from blog.forms import CommentForm, ReplyForm
 
 class BlogListView(ListView):
     model = Task
@@ -85,4 +86,44 @@ class SearchBlogListView(ListView):
         context = super().get_context_data(**kwargs)
         context["query"] = self.query
         context["post_count"] = self.post_count
+        return context
+
+class CommentCreateView(CreateView):
+    model = Comment
+    form_class = CommentForm
+
+    def form_valid(self, form):
+        comment = form.save(commit=False)
+
+        post_pk = self.kwargs["post_pk"]
+        post = get_object_or_404(Task, pk=post_pk)
+
+        comment.post = post
+        comment.save
+        return redirect("post-detail", pk=post_pk)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post_pk = self.kwargs["post_pk"]
+        context["post"] = get_object_or_404(Post, pk=post_pk)
+        return context
+
+class ReplyCreateView(CreateView):
+    model = Reply
+    form_class = ReplyForm
+
+    def form_valid(self, form):
+        reply = form.save(commit=False)
+
+        comment_pk = self.kwargs["comment_pk"]
+        comment = get_object_or_404(Comment, pk=comment_pk)
+
+        reply.comment = comment
+        reply.save()
+        return redirect("post-detail", pk=comment.post.pk)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        comment_pk = self.kwargs["comment_pk"]
+        context["comment"] = get_object_or_404(Comment, pk=comment_pk)
         return context

@@ -6,6 +6,8 @@ from blog.views import (
     CategoryBlogListView,
     TagBlogListView,
     SearchBlogListView,
+    CommentCreateView,
+    ReplyCreateView,
 )
 
 urlpatterns = [
@@ -14,4 +16,6 @@ urlpatterns = [
     path("category/<str:slug>/", CategoryBlogListView.as_view(), name="category-post-list"),
     path("tag/<str:slug>/", TagBlogListView.as_view(), name="tag-post-list"),
     path("search/", SearchBlogListView.as_view(), name="search-post-list"),
+    path("comment/<int:post_pk>/", CommentCreateView.as_view(), name="comment"),
+    path("reply/<int:comment_pk>/", ReplyCreateView.as_view(), name="reply"),
 ]
