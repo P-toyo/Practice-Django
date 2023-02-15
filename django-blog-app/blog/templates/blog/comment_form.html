@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-9">
+            <h1>コメントを書き込む</h1>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">返信</button>
+            </form>
+        </div>
+        <div class="col-3">
+            {% include "blog/snippets/sidebar.html" %}
+        </div>
+    </div>
+{% endblock content %}

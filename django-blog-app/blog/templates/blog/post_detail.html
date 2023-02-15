@@ -3,10 +3,15 @@
 {% block content %}
     <div class="row">
         <div class="col-9">
-            <h2>{{ object.title }}</h2>
-            <p>{{ object.content }}</p>
-            <p>投稿日時：{{ object.created_at }}</p>
-            <p>編集日時：{{ object.updated_at }}</p>
+            <div class="article-area">
+                <h2>{{ object.title }}</h2>
+                <p>{{ object.content }}</p>
+                <p>投稿日時：{{ object.created_at }}</p>
+                <p>編集日時：{{ object.updated_at }}</p>
+            </div>
+            {% include "blog/snippets/comment.html" %}
+            <hr>
+            <a href="{% url "comment" post.pk %}">コメントする</a>
         </div>
         <div class="col-3">
             {% include "blog/snippets/sidebar.html" %}
