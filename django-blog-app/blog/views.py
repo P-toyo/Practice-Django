@@ -111,6 +111,7 @@ class CommentCreateView(CreateView):
 class ReplyCreateView(CreateView):
     model = Reply
     form_class = ReplyForm
+    template_name = "blog/comment_form.html"
 
     def form_valid(self, form):
         reply = form.save(commit=False)
