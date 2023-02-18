@@ -4,6 +4,8 @@
         <b>{{ comment }} {{ comment.created_at }}</b>
         <p>{{ comment.text }}</p>
         <a href="{% url "reply" comnent.pk %}">返信する</a>
+        <a href="{% url "comment-delete" comment.pk %}">削除</a>
+
         {% for reply in comment.reply_set.all %}
             <div class="relpy">
                 <b>{{ reply.name }} {{ reply.created_at }}</b>
