@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView, DeleteView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 # Create your views here.
 from blog.models import Task, Category, Tag, Comment, Reply
@@ -133,4 +133,6 @@ class ReplyCreateView(CreateView):
 class CommentDeleteView(DeleteView):
     model = Comment
     template_name = "blog/comment_form.html"
-    success_url = reverse_lazy("post-detail")
+
+    def get_success_url(self):
+        return reversed("post-detail", kwargs={"pk": self.object.post.pk})
