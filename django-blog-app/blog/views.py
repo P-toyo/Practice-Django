@@ -105,7 +105,7 @@ class CommentCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         post_pk = self.kwargs["post_pk"]
-        context["post"] = get_object_or_404(Post, pk=post_pk)
+        context["post"] = get_object_or_404(Task, pk=post_pk)
         return context
 
 class ReplyCreateView(CreateView):

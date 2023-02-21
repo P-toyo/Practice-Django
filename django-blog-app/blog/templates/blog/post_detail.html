@@ -9,9 +9,9 @@
                 <p>投稿日時：{{ object.created_at }}</p>
                 <p>編集日時：{{ object.updated_at }}</p>
             </div>
-            {% include "blog/snippets/comment.html" %}
+            {% include "blog/snippets/comments.html" %}
             <hr>
-            <a href="{% url "comment" post.pk %}">コメントする</a>
+            <a href="{% url "comment" object.pk %}">コメントする</a>
         </div>
         <div class="col-3">
             {% include "blog/snippets/sidebar.html" %}
